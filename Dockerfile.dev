@@ -1,0 +1,22 @@
+FROM node:alpine
+
+WORKDIR /usr/src/app
+
+# packages.json을 먼저 복사를 해서 캐싱된 모듈을 사용하게 함으로써
+
+# 빌드 시 불필요한 설치과정을 패스하게 됨
+COPY package.json ./
+
+RUN npm install
+
+# COPY [복사 할 파일 경로] [컨테이너내에서 파일이 복사될 경로]
+COPY ./ ./
+
+CMD ["npm", "run", "start"]
+# Mac 에선 상관 없지만
+
+# Window에서 Volume 기능으로 실시간 화면이 변화하는걸 확인하고 싶으면
+
+# 리액트 핫로딩 작동 옵션을 true 로 줘야 Volume 기능을 정상적으로 사용할 수 있다.
+
+# ENV CHOKIDAR_USEPOLLING=TRUE
